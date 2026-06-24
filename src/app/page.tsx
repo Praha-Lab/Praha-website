@@ -1,33 +1,39 @@
-const modelStats = [
-  ["Model", "Praha Voice-1"],
-  ["Latency", "Sub-second"],
-  ["Audio", "48 kHz"],
+const labStats = [
+  ["Lab", "Applied AI"],
+  ["First release", "Praha Voice-1"],
+  ["Focus", "Models + tools"],
   ["Access", "API live"],
 ];
 
-const capabilities = [
+const researchTracks = [
   {
-    title: "Expressive speech",
-    copy: "Natural cadence, clean emphasis, and stable long-form narration for product, media, and agent voice output.",
+    title: "Speech systems",
+    copy: "Voice generation, low-latency audio, and model interfaces for products that need to speak clearly.",
   },
   {
-    title: "Realtime generation",
-    copy: "Low-latency text-to-speech for assistants, reading apps, support flows, and interactive voice interfaces.",
+    title: "Agent tooling",
+    copy: "APIs, demos, and workflow surfaces that make AI models easier to test, operate, and ship.",
   },
   {
-    title: "Production control",
-    copy: "Voice selection, style control, streaming responses, and API behavior built for real application teams.",
+    title: "Compact inference",
+    copy: "Smaller, faster model paths for practical deployment rather than benchmark-only research.",
   },
 ];
 
-const useCases = [
-  ["Voice agents", "Responsive speech for AI assistants and customer workflows."],
-  ["Narration", "Long-form audio for lessons, articles, onboarding, and docs."],
-  ["Product UX", "Generated voice prompts for apps, tools, and accessibility layers."],
-  ["Localization", "Consistent speech output across markets and product surfaces."],
+const modelStats = [
+  ["Model", "Praha Voice-1"],
+  ["Type", "Text-to-speech"],
+  ["Audio", "48 kHz"],
+  ["Latency", "Sub-second"],
 ];
 
 const voices = ["Atlas", "Mira", "Nora", "Sol"];
+
+const releases = [
+  ["Praha Voice-1", "Released", "Text-to-speech for apps, agents, and narration."],
+  ["Praha AgentKit", "Research", "Tools for evaluating and operating model-driven workflows."],
+  ["Praha Compact", "Research", "Small-model inference experiments for production surfaces."],
+];
 
 export default function Home() {
   return (
@@ -38,36 +44,37 @@ export default function Home() {
           <span>Praha Labs</span>
         </a>
         <nav>
-          <a href="#model">Model</a>
-          <a href="#studio">Studio</a>
-          <a href="#api">API</a>
+          <a href="#lab">Lab</a>
+          <a href="#voice">Voice-1</a>
+          <a href="#releases">Releases</a>
           <a href="/demo">Demo</a>
         </nav>
       </header>
 
       <section id="top" className="hero">
         <div className="hero-copy">
-          <p className="eyebrow">Praha Labs voice model</p>
-          <h1>Text-to-speech that sounds ready for product.</h1>
+          <p className="eyebrow">Praha Labs / applied AI</p>
+          <h1>Building useful AI models and the tools around them.</h1>
           <p className="hero-lede">
-            Praha Voice-1 turns text into clear, expressive speech for agents,
-            apps, narration, and developer workflows. Built by Praha Labs for
-            teams that need voice output with control, speed, and polish.
+            Praha Labs is an applied AI lab building model systems for real
+            product surfaces. Our first release is Praha Voice-1, a
+            text-to-speech model for agents, apps, narration, and developer
+            workflows.
           </p>
           <div className="hero-actions" aria-label="Primary actions">
-            <a className="button primary" href="/demo">
-              Try Voice-1
+            <a className="button primary" href="#voice">
+              Explore Voice-1
             </a>
-            <a className="button secondary" href="#api">
-              View API
+            <a className="button secondary" href="/demo">
+              Open demo
             </a>
           </div>
         </div>
 
-        <aside className="voice-console" aria-label="Praha Voice-1 preview">
+        <aside className="voice-console" aria-label="Praha Labs first model preview">
           <div className="console-header">
-            <span>Praha Voice-1</span>
-            <strong>Live</strong>
+            <span>First model release</span>
+            <strong>Praha Voice-1</strong>
           </div>
           <div className="waveform" aria-hidden="true">
             {Array.from({ length: 46 }).map((_, index) => (
@@ -85,8 +92,8 @@ export default function Home() {
         </aside>
       </section>
 
-      <section className="status-strip" aria-label="Model facts">
-        {modelStats.map(([label, value]) => (
+      <section className="status-strip" aria-label="Praha Labs facts">
+        {labStats.map(([label, value]) => (
           <div key={label}>
             <span>{label}</span>
             <strong>{value}</strong>
@@ -94,19 +101,42 @@ export default function Home() {
         ))}
       </section>
 
-      <section id="model" className="section work-section">
+      <section id="lab" className="section work-section">
         <div className="section-heading">
-          <p className="eyebrow">Model</p>
-          <h2>A voice model for apps that speak back.</h2>
+          <p className="eyebrow">The lab</p>
+          <h2>One lab, multiple model directions.</h2>
         </div>
         <div className="capability-grid">
-          {capabilities.map((item, index) => (
+          {researchTracks.map((item, index) => (
             <article className="capability" key={item.title}>
               <span>{String(index + 1).padStart(2, "0")}</span>
               <h3>{item.title}</h3>
               <p>{item.copy}</p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section id="voice" className="voice-feature section">
+        <div>
+          <p className="eyebrow">First release</p>
+          <h2>Praha Voice-1 turns text into production-ready speech.</h2>
+        </div>
+        <div className="feature-copy">
+          <p>
+            Voice-1 is the first public model from Praha Labs. It is designed
+            for products that need clear generated speech with low latency,
+            controllable voices, and API behavior that can fit into real
+            application stacks.
+          </p>
+          <div className="feature-actions">
+            <a className="button primary" href="/demo">
+              Try Voice-1
+            </a>
+            <a className="button secondary" href="#api">
+              View API
+            </a>
+          </div>
         </div>
       </section>
 
@@ -145,17 +175,20 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section usecase-section">
+      <section id="releases" className="section usecase-section">
         <div>
-          <p className="eyebrow">Use cases</p>
-          <h2>Built for every product surface where voice matters.</h2>
+          <p className="eyebrow">Model releases</p>
+          <h2>The release page starts with voice, not ends there.</h2>
         </div>
         <div className="milestones">
-          {useCases.map(([title, copy], index) => (
+          {releases.map(([title, status, copy], index) => (
             <article className="milestone" key={title}>
               <span>{String(index + 1).padStart(2, "0")}</span>
               <h3>{title}</h3>
-              <p>{copy}</p>
+              <p>
+                <strong>{status}</strong>
+                {copy}
+              </p>
             </article>
           ))}
         </div>
@@ -163,9 +196,9 @@ export default function Home() {
 
       <section className="closing">
         <p className="eyebrow">Praha Labs</p>
-        <h2>Ship voice into your product.</h2>
+        <h2>Explore the lab and the first model.</h2>
         <a className="button primary" href="/demo">
-          Open the demo
+          Open Voice-1 demo
         </a>
       </section>
     </main>

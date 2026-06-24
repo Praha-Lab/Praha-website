@@ -408,7 +408,8 @@ h3 {
 .work-section,
 .api-section,
 .usecase-section,
-.voice-studio {
+.voice-studio,
+.voice-feature {
   border-bottom: 1px solid var(--line);
   display: grid;
   gap: 56px;
@@ -460,10 +461,23 @@ h3 {
 .milestone p,
 .voice-card p,
 .demo-shell p,
-.sample-stack p {
+.sample-stack p,
+.feature-copy p {
   color: var(--muted);
   margin-bottom: 0;
   max-width: 62ch;
+}
+
+.feature-copy {
+  align-self: end;
+  display: grid;
+  gap: 28px;
+}
+
+.feature-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .voice-grid {
@@ -530,6 +544,16 @@ h3 {
 .milestone p {
   font-size: 0.96rem;
   line-height: 1.42;
+}
+
+.milestone p strong {
+  color: var(--acid);
+  display: block;
+  font-family: "DIN Alternate", "Avenir Next", sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
 }
 
 .closing {
@@ -627,6 +651,7 @@ textarea:focus {
   .api-section,
   .usecase-section,
   .voice-studio,
+  .voice-feature,
   .closing {
     grid-template-columns: 1fr;
   }
@@ -691,7 +716,8 @@ textarea:focus {
 
   .hero-actions,
   .closing,
-  .demo-controls {
+  .demo-controls,
+  .feature-actions {
     display: flex;
     flex-direction: column;
   }
