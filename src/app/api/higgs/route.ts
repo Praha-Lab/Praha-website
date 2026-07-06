@@ -1,39 +1,46 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const ADAPTER_URL = process.env.PRAHA_TTS_URL || "";
-const TURBO_URL = process.env.PRAHA_TURBO_TTS_URL || "";
+const HIGGS_URL = process.env.HIGGS_TTS_URL || "";
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const text = formData.get("text");
     const audio = formData.get("audio");
-    const model = (formData.get("model") as string) || "adapter";
+    const referenceText = formData.get("referenceText");
 
-    if (!text || !audio || typeof audio === "string") {
+    if (!text || typeof text !== "string" || !text.trim()) {
       return NextResponse.json(
-        { error: "Both 'text' and 'audio' file are required." },
+        { error: "Text is required." },
         { status: 422 },
       );
     }
 
-    const backendUrl = model === "turbo" ? TURBO_URL : ADAPTER_URL;
-
-    if (!backendUrl) {
+    if (!HIGGS_URL) {
       return NextResponse.json(
-        { error: `TTS backend not configured for model '${model}'.` },
+        { error: "Higgs TTS backend is not configured." },
         { status: 503 },
       );
     }
 
-    const audioBytes = await (audio as File).arrayBuffer();
-    console.log(`[inference] model=${model} text="${text.slice(0, 80)}…" audio=${audioBytes.byteLength}B`);
-
     const backendForm = new FormData();
-    backendForm.set("text", text as string);
-    backendForm.set("audio", new Blob([audioBytes]), "reference.wav");
+    backendForm.set("text", text.trim());
+    backendForm.set("temperature", "0.8");
+    backendForm.set("top_k", "50");
+    backendForm.set("max_new_tokens", "1024");
 
-    const backendRes = await fetch(backendUrl, {
+    if (referenceText && typeof referenceText === "string") {
+      backendForm.set("reference_text", referenceText.trim());
+    }
+
+    if (audio && typeof audio !== "string") {
+      const audioBytes = await (audio as File).arrayBuffer();
+      backendForm.set("audio", new Blob([audioBytes]), (audio as File).name || "reference.wav");
+    }
+
+    console.log(`[higgs] text="${text.slice(0, 80)}…" audio=${audio && typeof audio !== "string" ? "yes" : "no"}`);
+
+    const backendRes = await fetch(HIGGS_URL, {
       method: "POST",
       body: backendForm,
     });
@@ -48,16 +55,13 @@ export async function POST(request: NextRequest) {
       } catch {
         msg = (await backendRes.text().catch(() => msg)) || msg;
       }
-      console.error(`[inference] ${model} error: ${msg}`);
+      console.error(`[higgs] error: ${msg}`);
       return NextResponse.json({ error: msg }, { status: backendRes.status || 502 });
     }
 
     const audioBuffer = await backendRes.arrayBuffer();
     const backendTime = backendRes.headers.get("x-backend-time") || "";
-    const duration = backendRes.headers.get("x-duration") || "";
-    console.log(
-      `[inference] ${model} success: ${audioBuffer.byteLength}B audio backend=${backendTime || "n/a"}s duration=${duration || "n/a"}s`,
-    );
+    console.log(`[higgs] success: ${audioBuffer.byteLength}B audio backend=${backendTime || "n/a"}s`);
 
     return new NextResponse(audioBuffer, {
       status: 200,
@@ -65,13 +69,12 @@ export async function POST(request: NextRequest) {
         "Content-Type": "audio/wav",
         "Cache-Control": "no-cache",
         ...(backendTime ? { "X-Backend-Time": backendTime } : {}),
-        ...(duration ? { "X-Duration": duration } : {}),
       },
     });
   } catch (e) {
-    console.error(`[inference] exception: ${(e as Error).message}`);
+    console.error(`[higgs] exception: ${(e as Error).message}`);
     return NextResponse.json(
-      { error: `Inference failed: ${(e as Error).message}` },
+      { error: `Higgs inference failed: ${(e as Error).message}` },
       { status: 500 },
     );
   }
