@@ -5,32 +5,49 @@ import { DitherCard } from "./dither-card";
 const releases = [
   {
     name: "RimaTTS",
-    number: "001",
+    number: "Current",
     status: "Demo available",
-    track: "Indian multilingual TTS",
-    copy: "RimaTTS V1 is a multilingual Indian text-to-speech model with voice cloning support across 12 languages.",
+    track: "Official Praha Labs release",
+    copy: "Multilingual text-to-speech and voice cloning model. The first public release from Praha Labs.",
     featured: true,
   },
   {
-    name: "Higgs TTS",
-    number: "002",
-    status: "Research backend",
-    track: "Expressive speech",
-    copy: "A larger speech system kept in the lab for comparison, streaming, and inference experiments.",
+    name: "Higgs TTS Evaluation",
+    number: "Eval",
+    status: "Benchmarking",
+    track: "External model",
+    copy: "External speech model used for comparison, inference tests, and quality benchmarking.",
   },
   {
-    name: "OmniVoice",
-    number: "003",
-    status: "Experimental",
-    track: "Multilingual voice",
-    copy: "Voice cloning tests across broader language and speaker coverage.",
+    name: "OmniVoice Experiments",
+    number: "Exp",
+    status: "Research",
+    track: "External experiments",
+    copy: "Voice cloning and multilingual speech experiments used to study broader speaker and language coverage.",
   },
 ];
 
 const labRows = [
-  ["Research", "Quality targets, failure cases, and release criteria."],
-  ["Serving", "Latency, cold starts, routing, and cost discipline."],
+  ["Research", "We explore model architectures, training methods, evaluation targets, and failure cases."],
+  ["Serving", "We care about latency, cold starts, routing, deployment cost, and reliable inference."],
   ["Surface", "Demos and APIs that make model behavior easy to judge."],
+];
+
+const buildAreas = [
+  ["Speech Models", "Text-to-speech, voice cloning, ASR, and real-time speech systems."],
+  ["Language Systems", "LLM workflows, reasoning systems, evaluation tools, and applied language models."],
+  ["Agentic AI", "Tool-using agents, automation workflows, memory systems, and model orchestration."],
+  ["Multimodal Models", "Systems that combine text, audio, vision, and interaction into usable AI products."],
+];
+
+const roadmap = [
+  "RimaTTS demo release",
+  "Better multilingual speech quality",
+  "Voice cloning improvements",
+  "API access",
+  "Real-time speech systems",
+  "ASR experiments",
+  "Agent and multimodal model releases",
 ];
 
 export default function Home() {
@@ -42,6 +59,7 @@ export default function Home() {
         </a>
         <nav>
           <a href="#lab">Lab</a>
+          <a href="#build">Build</a>
           <a href="#releases">Releases</a>
           <a href="/demo">Demo</a>
         </nav>
@@ -56,10 +74,19 @@ export default function Home() {
         <div className="hero-copy">
           <p className="section-label">Applied AI laboratory</p>
           <h1>Praha Labs</h1>
-          <p>Applied AI systems lab for model releases, inference, and demos.</p>
+          <p className="hero-tagline">Beyond Artificial. Toward Intelligence.</p>
+          <p>
+            Praha Labs is an applied AI lab building models, tools, and systems
+            for speech, language, agents, and multimodal intelligence.
+          </p>
+          <p>
+            Our work begins with RimaTTS, a multilingual text-to-speech and voice
+            cloning model, and expands toward a broader release line of practical
+            AI systems.
+          </p>
           <div className="hero-actions" aria-label="Primary actions">
             <a className="button button-primary" href="/demo">
-              Open demo
+              Try RimaTTS
             </a>
             <a className="button button-secondary" href="#releases">
               View releases
@@ -78,8 +105,8 @@ export default function Home() {
           <div className="release-info-panel">
             <div className="release-info-copy">
               <p>
-                RimaTTS V1 is a multilingual Indian text-to-speech model with
-                voice cloning support across 12 languages.
+                RimaTTS is the first public release from Praha Labs: a
+                multilingual text-to-speech and voice cloning model.
               </p>
             </div>
 
@@ -90,12 +117,12 @@ export default function Home() {
               </div>
               <div>
                 <dt>Focus</dt>
-                <dd>12 Indian languages</dd>
+                <dd>Speech generation</dd>
               </div>
             </dl>
 
             <a className="release-info-action" href="/demo">
-              <span>Open demo</span>
+              <span>Try RimaTTS</span>
               <ArrowRight aria-hidden="true" size={18} strokeWidth={2} />
             </a>
           </div>
@@ -105,10 +132,20 @@ export default function Home() {
       <section id="lab" className="lab-section">
         <div className="section-head">
           <p className="section-label">Lab system</p>
-          <h2>A model lab, not a single product page.</h2>
+          <h2>A lab for usable AI releases.</h2>
           <p>
-            Praha Labs keeps research, serving, and interface work in the same
-            release loop.
+            Praha Labs builds applied AI systems that move from research
+            prototypes to usable model releases.
+          </p>
+          <p>
+            We work across speech, language, agents, and multimodal AI. Each
+            release is designed to be tested through demos, improved through
+            real-world feedback, and eventually shaped into production-ready
+            systems.
+          </p>
+          <p>
+            Praha Labs connects research, inference, and product surfaces so
+            models can be tested beyond notebooks.
           </p>
         </div>
 
@@ -122,13 +159,54 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="first-release" className="first-release-section">
+        <div className="section-head">
+          <p className="section-label">Release 001</p>
+          <h2>First Release: RimaTTS</h2>
+          <p>
+            RimaTTS is the first public release from Praha Labs: a multilingual
+            text-to-speech and voice cloning model.
+          </p>
+          <p>
+            It represents the lab&apos;s release philosophy: build useful models,
+            expose them through demos, test them in real scenarios, and improve
+            them toward production-ready systems.
+          </p>
+        </div>
+
+        <div className="release-cta-row" aria-label="RimaTTS actions">
+          <a className="button button-primary" href="/demo">
+            Try RimaTTS
+          </a>
+          <a className="button button-secondary" href="#releases">
+            View Model
+          </a>
+        </div>
+      </section>
+
+      <section id="build" className="build-section">
+        <div className="section-head">
+          <p className="section-label">Scope</p>
+          <h2>What We Build</h2>
+        </div>
+
+        <div className="build-grid">
+          {buildAreas.map(([title, copy]) => (
+            <article key={title}>
+              <h3>{title}</h3>
+              <p>{copy}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section id="releases" className="release-deck">
         <div className="section-head release-head">
           <p className="section-label">Model releases</p>
-          <h2>First release: RimaTTS.</h2>
+          <h2>Current Release</h2>
           <p>
-            Speech is the first model track. The release catalogue is designed
-            to grow beyond it.
+            Official Praha Labs releases are listed separately from external
+            evaluations and experiments.
           </p>
         </div>
 
@@ -154,14 +232,40 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="roadmap-section">
+        <div className="section-head">
+          <p className="section-label">Roadmap</p>
+          <h2>Roadmap</h2>
+        </div>
+
+        <ol className="roadmap-list">
+          {roadmap.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ol>
+      </section>
+
       <section className="closing-band">
         <div>
           <p className="section-label">Praha Labs</p>
-          <h2>RimaTTS starts the release line. The lab keeps building from there.</h2>
+          <h2>Build with Praha Labs</h2>
+          <p>
+            We are opening early access to demos, model releases, and applied AI
+            experiments. Reach out for collaborations, API access, evaluations,
+            or research partnerships.
+          </p>
         </div>
-        <a className="button button-primary" href="/demo">
-          Test the models
-        </a>
+        <div className="closing-actions">
+          <a className="button button-primary" href="mailto:hello@prahalabs.ai">
+            Contact
+          </a>
+          <a className="button button-primary" href="/demo">
+            Try RimaTTS
+          </a>
+          <a className="button button-primary" href="#releases">
+            View Releases
+          </a>
+        </div>
       </section>
     </main>
   );
