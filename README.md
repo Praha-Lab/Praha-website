@@ -1,6 +1,6 @@
 # Ai-Labs
 
-Next.js landing site for Praha Labs, a working-name AI lab preparing future model demos and sample inference.
+Next.js website for Praha Lab and the interactive RimaTTS V1 demo.
 
 ## Development
 

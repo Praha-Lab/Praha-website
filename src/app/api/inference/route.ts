@@ -1,78 +1,123 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const ADAPTER_URL = process.env.PRAHA_TTS_URL || "";
-const TURBO_URL = process.env.PRAHA_TURBO_TTS_URL || "";
+const RIMATTS_URL = process.env.PRAHA_TTS_URL ?? "";
+const MAX_TEXT_LENGTH = 1000;
+const MAX_AUDIO_BYTES = 10 * 1024 * 1024;
+const REQUEST_TIMEOUT_MS = 120_000;
+const AUDIO_TYPES = new Set([
+  "audio/mpeg",
+  "audio/mp3",
+  "audio/wav",
+  "audio/wave",
+  "audio/x-wav",
+]);
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const text = formData.get("text");
     const audio = formData.get("audio");
-    const model = (formData.get("model") as string) || "adapter";
 
-    if (!text || !audio || typeof audio === "string") {
+    if (typeof text !== "string" || !text.trim()) {
+      return NextResponse.json({ error: "Text is required." }, { status: 422 });
+    }
+
+    if (text.trim().length > MAX_TEXT_LENGTH) {
       return NextResponse.json(
-        { error: "Both 'text' and 'audio' file are required." },
+        { error: `Text must be ${MAX_TEXT_LENGTH} characters or fewer.` },
+        { status: 413 },
+      );
+    }
+
+    if (!(audio instanceof File)) {
+      return NextResponse.json(
+        { error: "A reference audio file is required." },
         { status: 422 },
       );
     }
 
-    const backendUrl = model === "turbo" ? TURBO_URL : ADAPTER_URL;
-
-    if (!backendUrl) {
+    if (audio.size === 0 || audio.size > MAX_AUDIO_BYTES) {
       return NextResponse.json(
-        { error: `TTS backend not configured for model '${model}'.` },
+        { error: "Reference audio must be a non-empty file no larger than 10 MB." },
+        { status: 413 },
+      );
+    }
+
+    if (audio.type && !AUDIO_TYPES.has(audio.type)) {
+      return NextResponse.json(
+        { error: "Reference audio must be a WAV or MP3 file." },
+        { status: 415 },
+      );
+    }
+
+    if (!RIMATTS_URL) {
+      return NextResponse.json(
+        { error: "RimaTTS inference is temporarily unavailable." },
         { status: 503 },
       );
     }
 
-    const audioBytes = await (audio as File).arrayBuffer();
-    console.log(`[inference] model=${model} text="${text.slice(0, 80)}…" audio=${audioBytes.byteLength}B`);
-
     const backendForm = new FormData();
-    backendForm.set("text", text as string);
-    backendForm.set("audio", new Blob([audioBytes]), "reference.wav");
+    backendForm.set("text", text.trim());
+    backendForm.set("audio", audio, audio.name || "reference.wav");
 
-    const backendRes = await fetch(backendUrl, {
+    const backendResponse = await fetch(RIMATTS_URL, {
       method: "POST",
       body: backendForm,
+      cache: "no-store",
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
 
-    const contentType = backendRes.headers.get("content-type") || "";
-
-    if (!backendRes.ok || contentType.includes("application/json")) {
-      let msg = `Backend returned ${backendRes.status}`;
-      try {
-        const body = await backendRes.json();
-        msg = body.error || body.detail?.[0]?.msg || msg;
-      } catch {
-        msg = (await backendRes.text().catch(() => msg)) || msg;
-      }
-      console.error(`[inference] ${model} error: ${msg}`);
-      return NextResponse.json({ error: msg }, { status: backendRes.status || 502 });
+    const contentType = backendResponse.headers.get("content-type") ?? "";
+    if (!backendResponse.ok || contentType.includes("application/json")) {
+      console.error("[rimats] backend request failed", {
+        status: backendResponse.status,
+        contentType,
+      });
+      return NextResponse.json(
+        { error: "RimaTTS could not generate audio. Please try again." },
+        { status: backendResponse.status >= 500 ? 502 : backendResponse.status },
+      );
     }
 
-    const audioBuffer = await backendRes.arrayBuffer();
-    const backendTime = backendRes.headers.get("x-backend-time") || "";
-    const duration = backendRes.headers.get("x-duration") || "";
-    console.log(
-      `[inference] ${model} success: ${audioBuffer.byteLength}B audio backend=${backendTime || "n/a"}s duration=${duration || "n/a"}s`,
-    );
+    if (!contentType.startsWith("audio/")) {
+      console.error("[rimats] unexpected backend response", { contentType });
+      return NextResponse.json(
+        { error: "RimaTTS returned an invalid audio response." },
+        { status: 502 },
+      );
+    }
+
+    const audioBuffer = await backendResponse.arrayBuffer();
+    if (audioBuffer.byteLength < 500) {
+      return NextResponse.json(
+        { error: "RimaTTS returned incomplete audio. Please try again." },
+        { status: 502 },
+      );
+    }
 
     return new NextResponse(audioBuffer, {
       status: 200,
       headers: {
-        "Content-Type": "audio/wav",
-        "Cache-Control": "no-cache",
-        ...(backendTime ? { "X-Backend-Time": backendTime } : {}),
-        ...(duration ? { "X-Duration": duration } : {}),
+        "Cache-Control": "private, no-store",
+        "Content-Disposition": 'inline; filename="rimats-v1.wav"',
+        "Content-Type": contentType,
+        "X-Content-Type-Options": "nosniff",
       },
     });
-  } catch (e) {
-    console.error(`[inference] exception: ${(e as Error).message}`);
+  } catch (error) {
+    const timedOut = error instanceof DOMException && error.name === "TimeoutError";
+    console.error("[rimats] inference request failed", {
+      name: error instanceof Error ? error.name : "UnknownError",
+    });
+
     return NextResponse.json(
-      { error: `Inference failed: ${(e as Error).message}` },
-      { status: 500 },
+      {
+        error: timedOut
+          ? "RimaTTS took too long to respond. Please try again."
+          : "RimaTTS inference is temporarily unavailable.",
+      },
+      { status: timedOut ? 504 : 500 },
     );
   }
 }
