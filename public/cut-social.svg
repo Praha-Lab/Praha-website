@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Praha Cut — Agentic Video Editor</title><desc id="desc">An illustrative video editor with preview, editing timeline, and agent direction.</desc>
+  <rect width="1200" height="630" fill="#101212"/>
+  <path d="M70 95h1060M70 555h1060" stroke="#49534d"/>
+  <g fill="#ec7958"><path d="M72 48h10v22H72zM86 38h10v32H86zM100 45h10v25h-10z"/></g>
+  <text x="130" y="66" fill="#eeeee8" font-family="Arial,sans-serif" font-size="26" font-weight="700">Praha Lab</text>
+  <text x="70" y="166" fill="#ec7958" font-family="monospace" font-size="18" letter-spacing="3">PRAHA CUT / IN DEVELOPMENT</text>
+  <text x="70" y="252" fill="#eeeee8" font-family="Arial,sans-serif" font-size="78" font-weight="700" letter-spacing="-5">Tell it what to cut.</text>
+  <text x="74" y="297" fill="#a3aaa7" font-family="Arial,sans-serif" font-size="24">Agentic video editing. An editable timeline.</text>
+  <rect x="70" y="343" width="1060" height="178" fill="#1b1f1d" stroke="#49534d"/>
+  <rect x="91" y="363" width="240" height="105" fill="#44382f"/><rect x="347" y="363" width="410" height="105" fill="#303d35"/><rect x="773" y="363" width="336" height="105" fill="#222c28"/>
+  <text x="109" y="390" fill="#c6a990" font-family="monospace" font-size="14">PREVIEW</text><text x="365" y="392" fill="#c7d2c7" font-family="monospace" font-size="14">AGENT / EDITING PLAN</text><text x="790" y="392" fill="#b4c7b3" font-family="monospace" font-size="14">TIMELINE</text>
+  <path d="M91 486h1018" stroke="#7e9983" stroke-width="15" stroke-dasharray="115 4 185 4 130 4 290 4 340"/><path d="M91 508h1018" stroke="#817a9a" stroke-width="7" stroke-dasharray="80 9 210 9 120 9 310 9 244"/>
+  <path d="M424 353v165" stroke="#ec7958" stroke-width="2"/>
+  <text x="70" y="593" fill="#a3aaa7" font-family="monospace" font-size="16">INTERFACE CONCEPT · PRAHALAB.COM/CUT</text>
+</svg>

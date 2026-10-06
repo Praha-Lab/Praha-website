@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./cut.css";
 
 const siteUrl = "https://prahalab.com";
-const description = "Praha Lab is an early-stage AI startup building infrastructure and applications across AI agents, developer tools, voice AI, and efficient AI inference.";
+const description = "Praha Lab builds intelligent products that combine frontier AI models with purpose-built tools. Meet Praha Cut, our agentic video editor for turning editing intent into an editable timeline.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Praha Lab — AI Infrastructure, Agents, Voice & Developer Tools",
+    default: "Praha Lab — Building Agentic Creative Tools",
     template: "%s | Praha Lab",
   },
   description,
@@ -20,23 +21,24 @@ export const metadata: Metadata = {
   },
   keywords: [
     "Praha Lab",
-    "AI infrastructure",
-    "AI agents",
-    "developer tools",
-    "voice AI",
-    "efficient inference",
+    "Praha Cut",
+    "agentic video editor",
+    "editable timeline",
+    "creative tools",
   ],
   openGraph: {
     type: "website",
     siteName: "Praha Lab",
-    title: "Praha Lab",
+    title: "Praha Lab — Building Agentic Creative Tools",
     description,
     url: "https://prahalab.com/",
+    images: [{ url: "/cut-social.svg", width: 1200, height: 630, alt: "Praha Cut editor concept with video preview and editable timeline" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Praha Lab",
+    title: "Praha Lab — Building Agentic Creative Tools",
     description,
+    images: ["/cut-social.svg"],
   },
   icons: {
     icon: "/favicon.svg",
