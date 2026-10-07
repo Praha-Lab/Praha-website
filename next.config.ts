@@ -5,6 +5,16 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: process.cwd(),
   },
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host" as const, value: "www.prahalab.com" }],
+        destination: "https://prahalab.com/:path*",
+        statusCode: 301,
+      },
+    ];
+  },
   async headers() {
     return [
       {
