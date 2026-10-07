@@ -29,6 +29,7 @@ const organization = {
 export default function Home() {
   return (
     <main id="top" className="site-shell">
+      <link rel="canonical" href="https://prahalab.com/" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }} />
       <a className="skip-link" href="#main-content">Skip to content</a>
       <header className="topbar" aria-label="Main navigation">

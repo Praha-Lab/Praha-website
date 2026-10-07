@@ -14,6 +14,10 @@ export const metadata: Metadata = {
   applicationName: "Praha Lab",
   authors: [{ name: "Praha Lab" }],
   creator: "Praha Lab",
+  robots: {
+    index: true,
+    follow: true,
+  },
   keywords: [
     "Praha Lab",
     "AI infrastructure",
@@ -22,9 +26,6 @@ export const metadata: Metadata = {
     "voice AI",
     "efficient inference",
   ],
-  alternates: {
-    canonical: "https://prahalab.com/",
-  },
   openGraph: {
     type: "website",
     siteName: "Praha Lab",
