@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "RimaTTS V1",
   description:
-    "RimaTTS V1 is a multilingual Indian text-to-speech model with voice cloning across eight languages.",
+    "RimaTTS V1 is an in-development multilingual Indian text-to-speech project. Public samples are being prepared.",
   alternates: {
     canonical: "/demo",
   },

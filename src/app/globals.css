@@ -386,7 +386,7 @@ h3 {
 
 .domain-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 90px;
 }
 
@@ -410,7 +410,101 @@ h3 {
 }
 
 .domain-grid h3 {
-  font-size: clamp(1.75rem, 2.4vw, 2.7rem);
+  font-size: clamp(1.5rem, 2.1vw, 2.4rem);
+}
+
+.project-list {
+  border-top: 1px solid var(--line-strong);
+}
+
+.project-row {
+  align-items: start;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 32px;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  padding: 34px 0;
+}
+
+.project-number {
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.project-row > div {
+  display: grid;
+  gap: 14px;
+}
+
+.project-row h3 {
+  font-size: clamp(1.6rem, 2.3vw, 2.4rem);
+}
+
+.project-row p {
+  color: var(--muted);
+  line-height: 1.65;
+  max-width: 45rem;
+}
+
+.project-row .text-link {
+  align-self: center;
+  white-space: nowrap;
+}
+
+.project-more {
+  color: var(--muted);
+  line-height: 1.6;
+  padding-top: 28px;
+}
+
+.project-more a,
+.about-details a {
+  text-underline-offset: 4px;
+}
+
+.preview-section {
+  border-top: 1px solid var(--line-strong);
+}
+
+.preview-section .release-dither-panel {
+  min-height: 430px;
+}
+
+.preview-details {
+  grid-template-rows: 1fr auto;
+}
+
+.about-details article > div {
+  display: grid;
+  gap: 14px;
+}
+
+.about-details article > div a {
+  align-items: center;
+  display: inline-flex;
+  gap: 8px;
+  width: fit-content;
+}
+
+.contact-email {
+  color: var(--white);
+  font-family: var(--mono);
+  font-size: clamp(1.15rem, 2.2vw, 1.75rem);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 7px;
+  overflow-wrap: anywhere;
+}
+
+.footer-identity {
+  display: grid;
+  gap: 14px;
+}
+
+.footer-identity p {
+  color: var(--muted);
+  line-height: 1.7;
 }
 
 .domain-grid p {
@@ -778,6 +872,16 @@ h3 {
   justify-content: end;
 }
 
+.site-footer > .footer-identity {
+  display: grid;
+  gap: 14px;
+  justify-content: start;
+}
+
+.site-footer > a[href^="mailto:"] {
+  text-transform: none;
+}
+
 /* RimaTTS demo */
 .demo-page {
   background: var(--paper);
@@ -1031,6 +1135,15 @@ h3 {
   .demo-intro {
     position: static;
   }
+
+  .project-row {
+    grid-template-columns: 34px minmax(0, 1fr);
+  }
+
+  .project-row .text-link {
+    grid-column: 2;
+    justify-self: start;
+  }
 }
 
 @media (min-width: 1081px) and (max-width: 1280px) {
@@ -1263,6 +1376,15 @@ h3 {
 
   .site-footer > div {
     justify-content: start;
+  }
+
+  .site-footer > .footer-identity {
+    display: grid;
+  }
+
+  .project-row {
+    gap: 14px;
+    padding: 26px 0;
   }
 
   .demo-topbar {

@@ -33,23 +33,23 @@ export default function DemoPage() {
             RimaTTS <small>V1</small>
           </h1>
           <p className="demo-lede">
-            A multilingual Indian text-to-speech model with voice cloning
-            across eight languages.
+            An in-development multilingual Indian text-to-speech project.
+            Public samples are being prepared.
           </p>
 
           <dl className="demo-facts">
             <div>
               <dt>Coverage</dt>
-              <dd>8 Indian languages</dd>
+              <dd>Eight languages planned</dd>
             </div>
             <div>
               <dt>Mode</dt>
-              <dd>Voice cloning</dd>
+              <dd>Research preview</dd>
             </div>
           </dl>
 
           <div className="demo-language-list">
-            <span className="meta-label">Supported languages</span>
+            <span className="meta-label">Planned sample languages</span>
             <p>{SUPPORTED_LANGUAGES.join(" · ")}</p>
           </div>
         </section>

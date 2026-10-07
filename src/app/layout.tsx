@@ -1,43 +1,41 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const siteUrl = "https://prahalab.com";
+const description = "Praha Lab is an early-stage AI startup building infrastructure and applications across AI agents, developer tools, voice AI, and efficient AI inference.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Praha Lab | Applied AI Laboratory",
+    default: "Praha Lab — AI Infrastructure, Agents, Voice & Developer Tools",
     template: "%s | Praha Lab",
   },
-  description:
-    "Praha Lab develops AI models and systems across speech, language, agents, and multimodal intelligence. RimaTTS V1 is its first public release.",
+  description,
   applicationName: "Praha Lab",
   authors: [{ name: "Praha Lab" }],
   creator: "Praha Lab",
   keywords: [
     "Praha Lab",
-    "RimaTTS",
-    "Indian text to speech",
-    "voice cloning",
-    "AI research lab",
-    "multilingual speech",
+    "AI infrastructure",
+    "AI agents",
+    "developer tools",
+    "voice AI",
+    "efficient inference",
   ],
   alternates: {
-    canonical: "/",
+    canonical: "https://prahalab.com/",
   },
   openGraph: {
     type: "website",
     siteName: "Praha Lab",
-    title: "Praha Lab | Applied AI Laboratory",
-    description:
-      "Models and systems across speech, language, agents, and multimodal intelligence.",
-    url: "/",
+    title: "Praha Lab",
+    description,
+    url: "https://prahalab.com/",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Praha Lab | Applied AI Laboratory",
-    description:
-      "Models and systems across speech, language, agents, and multimodal intelligence.",
+    title: "Praha Lab",
+    description,
   },
   icons: {
     icon: "/favicon.svg",
